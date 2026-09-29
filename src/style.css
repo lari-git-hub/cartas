@@ -25,22 +25,31 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #f8f4f8;
+  font-family: Georgia, 'Times New Roman', Times, serif
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 4em;
   line-height: 1.1;
+  color: #535bf2;
+  box-shadow: 5px 5px 10px gray;
+  border-radius: 10px;
+  padding: 10px;
+  
+  
 }
 
 #app {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 80px;
   max-width: 1280px;
-  margin: 0 ;
+  margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -65,22 +74,21 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
   padding: 0.6em 1.2em;
+  border-radius: 10px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: blueviolet;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: blueviolet;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
 }
 
 @media (prefers-color-scheme: light) {
@@ -94,4 +102,101 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.juego {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7daf8;
+  border: 2px solid blueviolet;
+  box-shadow: 5px 5px 10px gray;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 30px;
+}
+
+.cartasDecorativas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cartasDecorativas img {
+  width: 100px;
+  height: auto;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 200px;
+
+}
+
+
+.carta{
+  border: 2px solid rgb(206, 47, 193);
+  color: rgb(206, 47, 193);
+}
+
+.carta:hover{
+  background-color: rgb(247, 231, 233);
+}
+
+.plantarse{
+  border: 2px solid rgb(206, 47, 193);
+  color: rgb(206, 47, 193);
+}
+
+.plantarse:hover{
+  background-color: rgb(247, 231, 233);
+}
+
+.nuevaPartida{
+  border: 2px solid rgb(206, 47, 193);
+  color: rgb(206, 47, 193);
+}
+
+.nuevaPartida:hover{
+  background-color: rgb(247, 231, 233);
+}
+
+.quePasaria{
+  border: 2px solid rgb(206, 47, 193);
+  color: rgb(206, 47, 193);
+}
+
+.quePasaria:hover{
+  background-color: rgb(247, 231, 233);
+}
+
+.zonaCarta {
+  display: flex;
+  align-items: center;
+  margin-top: 250px;
+  box-shadow: 5px 5px 10px gray;
+
+}
+
+.valorPuntuacion{
+  margin-top: 80px ;
+  padding: 0.6em 1.2em;
+  border: 2px solid rgb(206, 47, 193);
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: rgb(206, 47, 193);
+  background-color: white;
+
+}
+
+.mensaje{
+  color: #646cff;
+  margin-top: 50px;
+  font-size: 1rem;
+  font-weight: bold;
 }

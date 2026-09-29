@@ -4,16 +4,46 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Juego de las siete y media</title>
   </head>
 
   <body>
     <div id="app">
-      <h1>Juego de las siete media</h1>
+
+      <div class="juego">
+        <h1>Juego de las siete y media</h1>
+
+        <div class="cartasDecorativas">
+          <img src="./imagenes/1_as-copas.jpg">
+          <img src="./imagenes/2_dos-copas.jpg">
+          <img src="./imagenes/3_tres-copas.jpg">
+          <img src="./imagenes/4_cuatro-copas.jpg">
+          <img src="./imagenes/5_cinco-copas.jpg">
+          <img src="./imagenes/6_seis-copas.jpg">
+          <img src="./imagenes/7_siete-copas.jpg">
+          <img src="./imagenes/10_diez-copas.jpg">
+          <img src="./imagenes/11_once-copas.jpg">
+          <img src="./imagenes/12_doce-copas.jpg">
+        </div>
+
+        <div class="botones">
+          <button class="carta">Pedir carta</button>
+          <button class="plantarse">Me planto</button>
+          <button class="nuevaPartida">Nueva partida</button>
+          <button class="quePasaria">¿Qué habría pasado?</button>
+        </div>
+
+        <div class="valorPuntuacion"></div>
+
+        <div class="mensaje">Puntaje</div>
+      </div>
+
+      <div class="zonaCarta">
+        <img id="cartaAbajo" src="/imagenes/back.jpg">
+      </div>
+
     </div>
-    <button class="carta">Pedir carta</button>
-    <div class="valorPuntuacion"></div>
-    <img id="cartaAbajo" src="/imagenes/back.jpg">
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
