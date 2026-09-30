@@ -1,170 +1,232 @@
 import "./style.css";
 
-let puntuacion : number = 0;
+let puntuacion: number = 0;
 let resultadoFinal = false;
 
 const elementoPuntuacion = document.querySelector(".valorPuntuacion");
 const botonCarta = document.querySelector(".carta");
-const cartaReves = document.querySelector("#cartaAbajo")
-const mensaje = document.querySelector(".mensaje")
-const plantarseBoton = document.querySelector(".plantarse")
-const nuevaPartidaBoton = document.querySelector(".nuevaPartida")
-const quePasariaBoton = document.querySelector(".quePasaria")
+const cartaReves = document.querySelector("#cartaAbajo");
+const mensaje = document.querySelector(".mensaje");
+const plantarseBoton = document.querySelector(".plantarse");
+const nuevaPartidaBoton = document.querySelector(".nuevaPartida");
+const quePasariaBoton = document.querySelector(".quePasaria");
 
+// PEDIR CARTA
 
-if(botonCarta && botonCarta instanceof HTMLButtonElement){
-  botonCarta.addEventListener("click", function(){
-
-    if(resultadoFinal === false){
-    const guardarNumero = dameCarta()
-    console.log(guardarNumero)
-    muestraCarta(guardarNumero)
-    
-    if(guardarNumero === 10 || guardarNumero === 11 || guardarNumero === 12 ){
-      puntuacion = puntuacion + 0.5
-    }else{
-      puntuacion = puntuacion + guardarNumero
-    }
-    muestraPuntuacion()
-
-    if(puntuacion > 7.5){
-      resultadoFinal = true
-      if(mensaje){
-      mensaje.textContent = "Game over"
-    }
-    } 
-    
-  }})
-
+if (botonCarta && botonCarta instanceof HTMLButtonElement) {
+  botonCarta.addEventListener("click", function () {
+    pedirCarta();
+  });
 }
 
-if(plantarseBoton && plantarseBoton instanceof HTMLButtonElement){
-  plantarseBoton.addEventListener("click", function(){
-    resultadoFinal = true
+const pedirCarta = () => {
 
-    if(puntuacion < 4){
-      if(mensaje){
-        mensaje.textContent = "Has sido muy conservador."
-      }
-    }
-    if(puntuacion === 5){
-      if(mensaje){
-        mensaje.textContent = "Te ha entrado el canguelo eh?."
-      }
-    }
-    if(puntuacion === 6 || puntuacion === 7){
-      if(mensaje){
-        mensaje.textContent = "Casi casi..."
-      }
-    }
-    if(puntuacion === 7.5){
-      if(mensaje){
-        mensaje.textContent = "¡ Lo has clavado! ¡Enhorabuena!"
-      }
-    }
-  })
-}
+  if (resultadoFinal === false) {
 
-if(nuevaPartidaBoton && nuevaPartidaBoton instanceof HTMLButtonElement){
-  nuevaPartidaBoton.addEventListener("click", function(){
-    puntuacion = 0
-    resultadoFinal = false
-    muestraPuntuacion()
-    if(cartaReves && cartaReves instanceof HTMLImageElement){
-      cartaReves.src = "/imagenes/back.jpg"
-    }
-    if(mensaje){
-      mensaje.textContent = ""
-    }
-  })
-  
-}
+    const numeroAleatorio = dameNumeroAleatorio();
+    const carta = obtenerNumeroCarta(numeroAleatorio);
 
-if(quePasariaBoton && quePasariaBoton instanceof HTMLButtonElement){
-  quePasariaBoton.addEventListener("click", function(){
-    if(resultadoFinal=== true){
-      let cartaQuePasaria = dameCarta()
-      let puntuacionHipotetica = puntuacion
+    const urlCarta = obtenerUrlCarta(carta);
+    muestraCarta(urlCarta);
 
-      if(cartaQuePasaria === 10 || cartaQuePasaria === 11 || cartaQuePasaria === 12 ){
-        puntuacionHipotetica = puntuacionHipotetica + 0.5
-      }else{
-        puntuacionHipotetica = puntuacionHipotetica + cartaQuePasaria
-      }
-      if(puntuacionHipotetica > 7.5){
-        if(mensaje){
-          mensaje.textContent = "Habrías perdido " + puntuacionHipotetica + " puntos"
-        }
-        }else{
-          if(mensaje){
-            mensaje.textContent = "No habrías perdido, hubieras tenido " + puntuacionHipotetica + " puntos."
-      }
-      
-    }
-    }
-    
-    
-    }
-  )}
+    const puntosCarta = obtenerPuntos(carta);
+    puntuacion = sumarPuntos(puntosCarta);
 
-function muestraCarta (carta : number) : void {
+    muestraPuntuacion();
+    comprobarPartida();
+  }};
 
-  if(cartaReves && cartaReves instanceof HTMLImageElement){
-     switch(carta){
-      case 1: 
-        cartaReves.src = "/imagenes/1_as-copas.jpg"
-      break;
-      case 2:
-        cartaReves.src = "/imagenes/2_dos-copas.jpg"
-      break;
-      case 3:
-        cartaReves.src = "/imagenes/3_tres-copas.jpg"
-      break;
-      case 4:
-        cartaReves.src = "/imagenes/4_cuatro-copas.jpg"
-      break;
-      case 5:
-        cartaReves.src = "/imagenes/5_cinco-copas.jpg"
-      break;
-      case 6:
-        cartaReves.src = "/imagenes/6_seis-copas.jpg"
-      break;
-      case 7:
-        cartaReves.src = "/imagenes/7_siete-copas.jpg"
-      break;
-      case 10:
-        cartaReves.src = "/imagenes/10_diez-copas.jpg"
-      break;
-      case 11:
-        cartaReves.src = "/imagenes/11_once-copas.jpg"
-      break;
-      case 12:
-        cartaReves.src = "/imagenes/12_doce-copas.jpg"
-      break;
+// GENERAR NÚMERO ALEATORIO
+
+const dameNumeroAleatorio = () => {
+  return Math.floor(Math.random() * 10) + 1;};
+
+// OBTENER NÚMERO DE CARTA
+
+const obtenerNumeroCarta = (numeroAleatorio: number) => {
+
+  if (numeroAleatorio > 7) {
+    return numeroAleatorio + 2;
   }
 
-  
-  console.log(cartaReves.src);
-}
-}
+  return numeroAleatorio;
+};
 
+// OBTENER PUNTOS DE LA CARTA
 
-function muestraPuntuacion() {
-  
-  if(elementoPuntuacion){
+const obtenerPuntos = (carta: number) => {
+
+  if (carta > 7) {
+    return 0.5;
+  }
+
+  return carta;
+};
+
+// SUMAR PUNTOS
+
+const sumarPuntos = (nuevosPuntos: number) => {
+  return puntuacion + nuevosPuntos;
+};
+
+// COMPROBAR PARTIDA
+
+const comprobarPartida = () => {
+
+  if (puntuacion > 7.5) {
+    resultadoFinal = true;
+
+    if (mensaje) {
+      mensaje.textContent = "Game Over";
+    }}
+
+  if (puntuacion === 7.5) {
+    resultadoFinal = true;
+
+    if (mensaje) {
+      mensaje.textContent = "¡Has alcanzado 7.5 puntos!";
+    }}};
+
+// MOSTRAR CARTA
+
+function obtenerUrlCarta(carta: number): string {
+
+  switch (carta) {
+
+    case 1:
+      return "/imagenes/1_as-copas.jpg";
+
+    case 2:
+      return "/imagenes/2_dos-copas.jpg";
+
+    case 3:
+      return "/imagenes/3_tres-copas.jpg";
+
+    case 4:
+      return "/imagenes/4_cuatro-copas.jpg";
+
+    case 5:
+      return "/imagenes/5_cinco-copas.jpg";
+
+    case 6:
+      return "/imagenes/6_seis-copas.jpg";
+
+    case 7:
+      return "/imagenes/7_siete-copas.jpg";
+
+    case 10:
+      return "/imagenes/10_diez-copas.jpg";
+
+    case 11:
+      return "/imagenes/11_once-copas.jpg";
+
+    case 12:
+      return "/imagenes/12_doce-copas.jpg";
+
+    default:
+      return "";
+  }}
+
+function muestraCarta(url: string): void {
+
+  if (cartaReves && cartaReves instanceof HTMLImageElement) {
+    cartaReves.src = url;
+  }}
+
+// MOSTRAR PUNTUACIÓN
+
+function muestraPuntuacion(): void {
+
+  if (elementoPuntuacion) {
     elementoPuntuacion.textContent = puntuacion.toString();
-  }
-}
-muestraPuntuacion();
+  }}
 
-function dameCarta() : number {
+// ME PLANTO
+
+if (plantarseBoton && plantarseBoton instanceof HTMLButtonElement) {
+
+  plantarseBoton.addEventListener("click", function () {
+
+    resultadoFinal = true;
+
+    mostrarMensajeFinal();
+  });
+}
+
+const mostrarMensajeFinal = () => {
+
+  if (!mensaje) {
+    return;
+  }
+
+  if (puntuacion < 4) {
+    mensaje.textContent = "Has sido muy conservador.";
+  }
+
+  if (puntuacion === 5) {
+    mensaje.textContent = "Te ha entrado el canguelo eh?.";
+  }
+
+  if (puntuacion === 6 || puntuacion === 7) {
+    mensaje.textContent = "Casi casi...";
+  }
+
+  if (puntuacion === 7.5) {
+    mensaje.textContent = "¡Lo has clavado! ¡Enhorabuena!";
+  }};
+
+// NUEVA PARTIDA
+
+if (nuevaPartidaBoton && nuevaPartidaBoton instanceof HTMLButtonElement) {
+
+  nuevaPartidaBoton.addEventListener("click", function () {
+    nuevaPartida();
+  });
+}
+
+const nuevaPartida = () => {
+
+  puntuacion = 0;
+  resultadoFinal = false;
+
+  muestraPuntuacion();
+
+  if (cartaReves && cartaReves instanceof HTMLImageElement) {
+    cartaReves.src = "/imagenes/back.jpg";
+  }
+
+  if (mensaje) {
+    mensaje.textContent = "";
+  }};
+
+// ¿QUÉ HABRÍA PASADO?
+
+if (quePasariaBoton && quePasariaBoton instanceof HTMLButtonElement) {
+
+  quePasariaBoton.addEventListener("click", function () {
+
+    if (resultadoFinal === true) {
+      comprobarQueHabriaPasado();
+    }
+
+  });
+}
+
+const comprobarQueHabriaPasado = () => {
+
+  const numeroAleatorio = dameNumeroAleatorio();
+  const cartaQuePasaria = obtenerNumeroCarta(numeroAleatorio);
+  const puntosCarta = obtenerPuntos(cartaQuePasaria);
+  const puntuacionHipotetica = sumarPuntos(puntosCarta);
   
-  let resultadoCarta = Math.floor(Math.random() * 10) + 1;
-
-  if(resultadoCarta > 7){
-    resultadoCarta = resultadoCarta +2
-  }
-
-  return resultadoCarta;
-}
+  if (mensaje) {
+    if (puntuacionHipotetica > 7.5) {
+      mensaje.textContent =
+        "Habrías perdido " + puntuacionHipotetica + " puntos";
+    } else {
+      mensaje.textContent =
+        "No habrías perdido, hubieras tenido " +
+        puntuacionHipotetica +
+        " puntos.";
+    }}};
 
